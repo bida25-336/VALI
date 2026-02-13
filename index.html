@@ -1,166 +1,114 @@
-/** @jsxImportSource https://esm.sh/react@18.2.0 */
-import React, { useState, useRef } from "https://esm.sh/react@18.2.0";
-import { createRoot } from "https://esm.sh/react-dom@18.2.0/client";
-
-const NO_PHRASES = [
-  "YOU MAD BRUV!?",
-  "Go experimenta ke ga eng MR man🤨",
-  "I see you wanna die yung n***a",
-  "😭😭😭",
-  "Don't break my heart :(",
-  "BRUV!!!",
-  "🔪🔪🔪🔪🔪🔪",
-];
-
-function App() {
-  const [noClicks, setNoClicks] = useState(0);
-  const [isValentine, setIsValentine] = useState(false);
-  const noBtnRef = useRef(null);
-
-  const yesButtonSize = Math.min(16 + noClicks * 20, 120);
-
-  const firstImg =
-    "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
-  const secondImg =
-    "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
-
-  const handleNo = () => {
-    setNoClicks((prev) => prev + 1);
-
-    // Button starts dodging after 2 clicks 😭
-    if (noClicks >= 1 && noBtnRef.current) {
-      const x = Math.random() * 300 - 150;
-      const y = Math.random() * 300 - 150;
-      noBtnRef.current.style.transform = `translate(${x}px, ${y}px)`;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
     }
-  };
 
-  const handleYes = () => {
-    setIsValentine(true);
-    const audio = new Audio(
-      "https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3",
-    );
-    audio.play().catch(() => {});
-  };
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        fontFamily: "Arial, sans-serif",
-        textAlign: "center",
-        overflow: "hidden",
-      }}
-    >
-      {!isValentine ? (
-        <>
-          <img
-            src={firstImg}
-            alt="Cute bear asking to be your Valentine"
-            loading="lazy"
-          />
-          <h1>Will you be my Valentine? 💘</h1>
+<body>
+  <div id="root"></div>
 
-          <div style={{ position: "relative" }}>
-            <button
-              onClick={handleYes}
-              style={{
-                fontSize: `${yesButtonSize}px`,
-                margin: "10px",
-                padding: "10px 20px",
-                backgroundColor: "green",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-              }}
-              aria-label="Say yes"
-            >
-              Yes
-            </button>
+  <script type="module">
+    import React, { useState, useRef } from "https://esm.sh/react@18";
+    import { createRoot } from "https://esm.sh/react-dom@18/client";
 
-            <button
-              ref={noBtnRef}
-              onClick={handleNo}
-              style={{
-                fontSize: "16px",
-                margin: "10px",
-                padding: "10px 20px",
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                position: "relative",
-                transition: "transform 0.2s ease",
-              }}
-              aria-label="Say no"
-            >
-              {noClicks === 0
+    const NO_PHRASES = [
+      "YOU MAD BRUV!?",
+      "Go experimenta ke ga eng MR man🤨",
+      "I see you wanna die yung n***a",
+      "😭😭😭",
+      "Don't break my heart :(",
+      "BRUV!!!",
+      "🔪🔪🔪🔪🔪🔪",
+    ];
+
+    function App() {
+      const [noClicks, setNoClicks] = useState(0);
+      const [isValentine, setIsValentine] = useState(false);
+      const noBtnRef = useRef(null);
+
+      const yesSize = Math.min(16 + noClicks * 20, 120);
+
+      const firstImg =
+        "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
+      const secondImg =
+        "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
+
+      function handleNo() {
+        setNoClicks(c => c + 1);
+
+        if (noClicks >= 1 && noBtnRef.current) {
+          const x = Math.random() * 300 - 150;
+          const y = Math.random() * 300 - 150;
+          noBtnRef.current.style.transform = `translate(${x}px, ${y}px)`;
+        }
+      }
+
+      if (!isValentine) {
+        return React.createElement(
+          "div",
+          null,
+          React.createElement("img", { src: firstImg }),
+          React.createElement("h1", null, "Will you be my Valentine? 💘"),
+          React.createElement(
+            "div",
+            null,
+            React.createElement(
+              "button",
+              {
+                onClick: () => setIsValentine(true),
+                style: { fontSize: yesSize + "px", background: "green", color: "white" }
+              },
+              "Yes"
+            ),
+            React.createElement(
+              "button",
+              {
+                ref: noBtnRef,
+                onClick: handleNo,
+                style: { background: "red", color: "white", position: "relative" }
+              },
+              noClicks === 0
                 ? "No"
-                : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)]}
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <img
-            src={secondImg}
-            alt="Bears celebrating love"
-            loading="lazy"
-          />
-          <div
-            style={{
-              fontSize: "48px",
-              color: "hotpink",
-              fontWeight: "bold",
-              animation: "pop 0.6s ease",
-            }}
-          >
-            Yay!!! 💖🎉
-          </div>
-        </>
-      )}
+                : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)]
+            )
+          )
+        );
+      }
 
-      <style>
-        {`
-          @keyframes pop {
-            0% { transform: scale(0.6); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-          }
-        `}
-      </style>
-    </div>
-  );
-}
+      return React.createElement(
+        "div",
+        null,
+        React.createElement("img", { src: secondImg }),
+        React.createElement("h1", { style: { color: "hotpink" } }, "Yay!!! 💖🎉")
+      );
+    }
 
-function client() {
-  createRoot(document.getElementById("root")).render(<App />);
-}
+    createRoot(document.getElementById("root")).render(
+      React.createElement(App)
+    );
+  </script>
+</body>
+</html>
 
-if (typeof document !== "undefined") client();
-
-export default async function server() {
-  return new Response(
-    `
-    <html>
-      <head>
-        <title>Valentine's Day Invitation</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>body { margin: 0; }</style>
-      </head>
-      <body>
-        <div id="root"></div>
-        <script src="https://esm.town/v/std/catch"></script>
-        <script type="module" src="${import.meta.url}"></script>
-      </body>
-    </html>
-    `,
-    { headers: { "content-type": "text/html" } },
-  );
-}
