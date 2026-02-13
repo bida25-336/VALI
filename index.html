@@ -51,30 +51,28 @@
       "Dame!!Doshite sonna koto suru no!🥺",
     ];
 
-    
-    const firstImg = "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
-    const jawDropImg = "https://media.tenor.com/4sYfJd0t2bIAAAAC/jaw-drop.gif";
-    const secondImg = "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
+    // **Reliable direct GIFs from Giphy (work on GitHub Pages)**
+    const firstImg = "https://media.giphy.com/media/3oEduSbSRVgzHZ3bLW/giphy.gif"; // hearts
+    const jawDropImg = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"; // jaw drop
+    const secondImg = "https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif"; // celebration
 
     let noClicks = 0;
     let isValentine = false;
-
     const app = document.getElementById("app");
 
     function render() {
-      app.innerHTML = ""; // clear previous content
+      app.innerHTML = "";
 
       if (!isValentine) {
         const img = document.createElement("img");
 
-      
+        // First click shows jaw-drop
         if (noClicks === 1) {
           img.src = jawDropImg;
           img.style.transform = "scale(1.5)";
-          setTimeout(() => { img.style.transform = "scale(1)"; }, 300);
+          setTimeout(() => img.style.transform = "scale(1)", 300);
         } else {
           img.src = firstImg;
-          img.style.transform = "scale(1)";
         }
 
         app.appendChild(img);
@@ -85,7 +83,6 @@
 
         const btnContainer = document.createElement("div");
 
-        // Yes button
         const yesBtn = document.createElement("button");
         yesBtn.textContent = "Yes";
         yesBtn.style.fontSize = `${Math.min(16 + noClicks * 20, 120)}px`;
@@ -93,22 +90,17 @@
         yesBtn.style.color = "white";
         yesBtn.onclick = () => {
           isValentine = true;
-          // Trigger confetti
-          confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-          });
+          confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
           render();
         };
         btnContainer.appendChild(yesBtn);
 
-        // No button
         const noBtn = document.createElement("button");
         noBtn.textContent = noClicks === 0 ? "No" : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)];
         noBtn.style.background = "red";
         noBtn.style.color = "purple";
         noBtn.style.position = "relative";
+
         noBtn.onclick = () => {
           noClicks++;
           if (noClicks > 1) {
@@ -118,8 +110,8 @@
           }
           render();
         };
-        btnContainer.appendChild(noBtn);
 
+        btnContainer.appendChild(noBtn);
         app.appendChild(btnContainer);
 
       } else {
