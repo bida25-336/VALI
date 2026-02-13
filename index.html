@@ -13,7 +13,7 @@
       align-items: center;
       font-family: Arial, sans-serif;
       text-align: center;
-      background: #ffe6f2;
+      background: linear-gradient(135deg, #9b59b6, #8e44ad, #6c3483);
       overflow: hidden;
     }
 
@@ -51,7 +51,7 @@
       "Dame!!Doshite sonna koto suru no!🥺",
     ];
 
-    // **Reliable direct GIFs from Giphy (work on GitHub Pages)**
+    // Working GIFs (Giphy)
     const firstImg = "https://media.giphy.com/media/3oEduSbSRVgzHZ3bLW/giphy.gif"; // hearts
     const jawDropImg = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"; // jaw drop
     const secondImg = "https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif"; // celebration
@@ -66,7 +66,7 @@
       if (!isValentine) {
         const img = document.createElement("img");
 
-        // First click shows jaw-drop
+        // First click shows jaw-drop GIF
         if (noClicks === 1) {
           img.src = jawDropImg;
           img.style.transform = "scale(1.5)";
