@@ -25,7 +25,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: absolute; /* allow full teleport */
+      position: absolute;
     }
 
     img {
@@ -55,8 +55,10 @@
       "Dame!!Doshite sonna koto suru no!🥺",
     ];
 
-    const firstImg = "https://media.giphy.com/media/ya4eevXU490Iw/giphy.gif"; // puppy eyes
-    const jawDropImg = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"; // jaw drop
+    // GIFs
+    const firstImg = "https://media.giphy.com/media/ya4eevXU490Iw/giphy.gif"; // puppy eyes on load
+    const noClick1 = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXc3aWh3dnJkbWxjNGhwMWh3Y3ZodzhuZmQ2YmJiYzBwMWgzYXR2ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HHzBaXsra2MHciRNQr/giphy.gif"; // 1st No click
+    const noClick2 = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjBqam94eWk3c3hvdTV2eTF5YnozdG0wdGRlY2RuNmNsdHV2eHU3ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YRPBhd3vscg5Fxx1DQ/giphy.gif"; // 2nd No click
     const secondImg = "https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif"; // celebration
 
     let noClicks = 0;
@@ -66,16 +68,13 @@
     function render() {
       app.innerHTML = "";
 
-      if (!isValentine) {
-        const img = document.createElement("img");
+      const img = document.createElement("img");
 
-        if (noClicks === 1) {
-          img.src = jawDropImg;
-          img.style.transform = "scale(1.5)";
-          setTimeout(() => img.style.transform = "scale(1)", 300);
-        } else {
-          img.src = firstImg;
-        }
+      if (!isValentine) {
+        // Choose GIF based on noClicks
+        if (noClicks === 1) img.src = noClick1;
+        else if (noClicks === 2) img.src = noClick2;
+        else img.src = firstImg; // default puppy eyes
 
         app.appendChild(img);
 
@@ -83,6 +82,7 @@
         h1.textContent = "Will you be my vali vali🥹💘";
         app.appendChild(h1);
 
+        // Yes button
         const yesBtn = document.createElement("button");
         yesBtn.textContent = "Yes";
         yesBtn.style.fontSize = `${Math.min(16 + noClicks * 20, 120)}px`;
@@ -99,7 +99,7 @@
         app.appendChild(yesBtn);
 
         const noBtn = document.createElement("button");
-        noBtn.textContent = noClicks === 0 ? "No" : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)];
+        noBtn.textContent = noClicks >= 3 ? NO_PHRASES[Math.min(noClicks - 3, NO_PHRASES.length - 1)] : "No";
         noBtn.style.background = "red";
         noBtn.style.color = "purple";
 
@@ -114,15 +114,19 @@
 
         noBtn.onclick = () => {
           noClicks++;
-          if (noClicks > 0) teleportNo();
+          if (noClicks >= 3) teleportNo();
           render();
         };
 
-        teleportNo();
+        if (noClicks >= 3) teleportNo();
+        else {
+          noBtn.style.left = "calc(50% + 60px)";
+          noBtn.style.top = "50%";
+        }
+
         app.appendChild(noBtn);
 
       } else {
-        const img = document.createElement("img");
         img.src = secondImg;
         app.appendChild(img);
 
