@@ -23,6 +23,11 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
+    img {
+      max-width: 300px;
+      border-radius: 15px;
+    }
   </style>
 </head>
 
@@ -51,10 +56,12 @@
 
       const yesSize = Math.min(16 + noClicks * 20, 120);
 
-      const firstImg =
-        "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
-      const secondImg =
-        "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
+      const firstImg = "https://media.tenor.com/VIChDQ6ejRQAAAAj/jumping-bear-hearts-no-png.gif";
+      const shookImg = "https://media.tenor.com"; 
+      const secondImg = "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
+
+      // logic: If exactly 1 click, show shookImg. Otherwise show firstImg.
+      const currentDisplayImg = noClicks === 1 ? shookImg : firstImg;
 
       function handleNo() {
         setNoClicks(c => c + 1);
@@ -70,7 +77,8 @@
         return React.createElement(
           "div",
           null,
-          React.createElement("img", { src: firstImg }),
+          // Updated to use the conditional currentDisplayImg
+          React.createElement("img", { src: currentDisplayImg }),
           React.createElement("h1", null, "Will you be my vali vali🥹💘"),
           React.createElement(
             "div",
