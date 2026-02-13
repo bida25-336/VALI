@@ -50,7 +50,8 @@
       "🔪🔪🔪🔪🔪🔪",
       "Dame!!Doshite sonna koto suru no!🥺",
     ];
-    
+
+    // Working GIFs (Giphy)
     const firstImg = "https://media.giphy.com/media/3oEduSbSRVgzHZ3bLW/giphy.gif"; // hearts
     const secondImg = "https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif"; // celebration
 
@@ -64,6 +65,7 @@
       if (!isValentine) {
         const img = document.createElement("img");
 
+        // Show first GIF initially, second GIF for all NO clicks
         img.src = noClicks === 0 ? firstImg : secondImg;
 
         app.appendChild(img);
